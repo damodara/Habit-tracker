@@ -7,9 +7,10 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from config.pagination import HabitPagination
+
 from .models import Habit
 from .serializers import HabitSerializer
-from config.pagination import HabitPagination
 
 
 class HabitListCreateView(generics.ListCreateAPIView):
@@ -38,7 +39,7 @@ class PublicHabitListView(generics.ListAPIView):
     pagination_class = HabitPagination
 
     def get_queryset(self):
-        return Habit.objects.filter(is_public=True).order_by('-id')
+        return Habit.objects.filter(is_public=True).order_by("-id")
 
 
 class HabitCompleteView(APIView):
@@ -63,7 +64,9 @@ class HabitCompleteView(APIView):
 
         habit.last_completed_at = now
         habit.next_reminder_at = next_dt
-        habit.save(update_fields=["last_completed_at", "next_reminder_at", "updated_at"])
+        habit.save(
+            update_fields=["last_completed_at", "next_reminder_at", "updated_at"]
+        )
 
         return Response(
             {

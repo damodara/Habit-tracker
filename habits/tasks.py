@@ -17,9 +17,7 @@ def send_telegram_message(message):
     if not settings.TELEGRAM_BOT_TOKEN or not settings.TELEGRAM_CHAT_ID:
         return False
 
-    url = (
-        f"https://api.telegram.org/bot{settings.TELEGRAM_BOT_TOKEN}/sendMessage"
-    )
+    url = f"https://api.telegram.org/bot{settings.TELEGRAM_BOT_TOKEN}/sendMessage"
     data = urllib.parse.urlencode(
         {
             "chat_id": settings.TELEGRAM_CHAT_ID,

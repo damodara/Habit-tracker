@@ -38,7 +38,10 @@ class RegisterView(APIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         token, _ = Token.objects.get_or_create(user=user)
-        return Response({"token": token.key, "user": {"id": user.id, "username": user.username}}, status=status.HTTP_201_CREATED)
+        return Response(
+            {"token": token.key, "user": {"id": user.id, "username": user.username}},
+            status=status.HTTP_201_CREATED,
+        )
 
 
 class LoginView(APIView):
