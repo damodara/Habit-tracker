@@ -11,4 +11,4 @@ exclude =
     *.egg-info,
     site-packages
 max-line-length = 120
-ignore = E402,E501
+ignore = E402,E501,E302,W292
