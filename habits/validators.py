@@ -52,11 +52,8 @@ def validate_related_habit_belongs_to_user(habit):
     """
     Связанная привычка должна принадлежать тому же пользователю.
     """
-    if (
-        habit.related_habit
-        and habit.user_id
-        and habit.related_habit.user_id != habit.user_id
-    ):
+    # Исправлено: условие в одну строку (убраны переносы операторов)
+    if habit.related_habit and habit.user_id and habit.related_habit.user_id != habit.user_id:
         raise ValidationError(
             "Связанная привычка должна принадлежать текущему пользователю."
         )
