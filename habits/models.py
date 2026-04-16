@@ -1,32 +1,40 @@
-from django.db import models
-from django.contrib.auth.models import User
-from .validators import (
-    validate_reward_and_related_habit,
-    validate_execution_time,
-    validate_pleasant_habit_properties,
-    validate_related_habit_is_pleasant,
-    validate_periodicity
-)
-
 from datetime import datetime, timedelta
 
+from django.contrib.auth.models import User
+from django.db import models
 from django.utils import timezone
 
 from .validators import (
+    validate_execution_time,
     validate_habit_completion_gap,
+    validate_periodicity,
+    validate_pleasant_habit_properties,
     validate_related_habit_belongs_to_user,
+    validate_related_habit_is_pleasant,
+    validate_reward_and_related_habit,
 )
 
+
 class Habit(models.Model):  # noqa: E302
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='habits')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="habits")
     place = models.CharField(max_length=255)
     time = models.TimeField()
     action = models.CharField(max_length=255)
     is_pleasant = models.BooleanField(default=False)
-    related_habit = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='linked_habits')
-    periodicity = models.PositiveIntegerField(default=1, validators=[validate_periodicity])  # days
+    related_habit = models.ForeignKey(
+        "self",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="linked_habits",
+    )
+    periodicity = models.PositiveIntegerField(
+        default=1, validators=[validate_periodicity]
+    )  # days
     reward = models.CharField(max_length=255, blank=True)
-    execution_time = models.PositiveIntegerField(validators=[validate_execution_time])  # seconds
+    execution_time = models.PositiveIntegerField(
+        validators=[validate_execution_time]
+    )  # seconds
     is_public = models.BooleanField(default=False)
     last_completed_at = models.DateTimeField(null=True, blank=True)
     last_reminded_at = models.DateTimeField(null=True, blank=True)

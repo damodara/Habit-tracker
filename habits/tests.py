@@ -1,11 +1,12 @@
-from datetime import time as dt_time, timedelta
+from datetime import time as dt_time
+from datetime import timedelta
 
 import pytest
 from django.contrib.auth.models import User
 from django.utils import timezone
+from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient
-from rest_framework import status
 
 from .models import Habit
 from .tasks import send_habit_reminder
@@ -90,7 +91,11 @@ def test_habit_crud_and_permissions(api_client, user):
         {"place": "Park"},
         format="json",
     )
-    assert resp_patch.status_code in (status.HTTP_200_OK, status.HTTP_202_ACCEPTED, status.HTTP_204_NO_CONTENT)
+    assert resp_patch.status_code in (
+        status.HTTP_200_OK,
+        status.HTTP_202_ACCEPTED,
+        status.HTTP_204_NO_CONTENT,
+    )
 
     # Delete.
     resp_del = api_client.delete(f"/api/habits/{habit_id}/")

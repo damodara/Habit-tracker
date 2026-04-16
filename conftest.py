@@ -1,10 +1,10 @@
 import os
+
 import django
 import pytest
 
-
 # Настройка Django перед импортом моделей
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 django.setup()
 
 

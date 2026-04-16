@@ -2,7 +2,6 @@ import os
 
 from celery import Celery
 
-
 # Ensure Django settings are loaded for Celery worker.
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 
